@@ -120,6 +120,12 @@ int main (int argc, char *argv[])
       exit(-1);
    }
 
+   if (wave_header.sample_rate != 16000)
+   {
+      printf("ERROR: Input not 16kHz\n\n");
+      exit(-1);
+   }
+
 
 
 /****************************************************************************/
@@ -136,15 +142,24 @@ int main (int argc, char *argv[])
    printf("INPUT  FILE: %s (8-bit, MONO, %i Hz)\n",argv[1],wave_header.sample_rate);
    printf("OUTPUT FILE: %s\n\n",argv[2]);
 
-   fprintf(output_file,"const s8 %s[] = {\n", argv[3]);
+   fprintf(output_file,"static const s8 %s[%u] = {\n", argv[3], input_file_size - 44 + 272);
 
-   for (loop=0;loop<input_file_size;loop++)
+   int line = 0;
+   for (loop = 44; loop < input_file_size; loop++)
    {
-      fprintf(output_file,"0x%x,",input_file_buffer[44+loop]+128);
+      if (!line) fprintf(output_file, "\t");
+      fprintf(output_file, "0x%02x,", input_file_buffer[loop]+128);
+      if (line == 17) {
+         line = 0;
+         fputs("\n", output_file);
+      } else {
+         line++;
+      }
    }
-   fseek(output_file,ftell(output_file)-1,0);
-   fprintf(output_file,"};\n");
+   if (line != 17) fputs("\n", output_file);
+   fprintf(output_file,"};\n\n");
 
+   fprintf(output_file, "static const u32 %s_size = sizeof(%s);\n", argv[3], argv[3]);
 
 
 /*****************************************************************************/
@@ -153,8 +168,6 @@ int main (int argc, char *argv[])
 
    fclose(output_file);
    free(input_file_buffer);
-
-   printf("Successfully created file %s\n\n",argv[2]);
 
    return (0);
 }
