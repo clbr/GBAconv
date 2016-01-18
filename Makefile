@@ -9,7 +9,7 @@
 
 CC = gcc
 TARGET = all
-CFLAGS = -Wall -ansi -pedantic 
+CFLAGS += -Wall -Wextra
 
 all :
 	$(CC) $(CFLAGS) -o pcx2gba pcx2gba.c
