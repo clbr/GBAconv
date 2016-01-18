@@ -13,7 +13,7 @@ CFLAGS += -Wall -Wextra
 
 all :
 	$(CC) $(CFLAGS) -o pcx2gba pcx2gba.c
-	$(CC) $(CFLAGS) -o wav2gba wav2gba.c
+	$(CC) $(CFLAGS) -o wav2cgba wav2cgba.c
 
 clean:
-	rm -f pcx2gba wav2gba *.o *.core core
+	rm -f pcx2gba wav2cgba *.o *.core core
