@@ -69,7 +69,8 @@ int main (int argc, char *argv[])
 
    if (argc!=4)
    {
-      printf("USAGE: wav2gba input.wav output.inc array_name (Input File must be 8-bit, MONO)\n\n");
+      printf("USAGE: %s input.wav output.inc array_name (Input File must be 8-bit, MONO)\n\n",
+      		argv[0]);
       exit(0);
    }
 
