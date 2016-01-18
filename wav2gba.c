@@ -64,7 +64,7 @@ int loop;
 int main (int argc, char *argv[])
 {
    printf("-------------------------------------------------------------------------------\n");
-   printf("      WAV to GBA Converter - GBAconv 1.00 (c) by Frederic Cambus 2002-2006\n");
+   printf("      WAV to GBA Converter, cgbasound version\n");
    printf("-------------------------------------------------------------------------------\n\n");
 
    if (argc!=4)
